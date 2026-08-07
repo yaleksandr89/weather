@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Yaleksandr\Weather\Tests\Value;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Yaleksandr\Weather\Exception\InvalidCoordinatesException;
 use Yaleksandr\Weather\Value\Coordinates;
 
 final class CoordinatesTest extends TestCase
 {
+    #[TestDox('Сохраняет корректные координаты без изменения')]
     public function testItPreservesValidCoordinates(): void
     {
         $coordinates = Coordinates::fromDegrees(55.7558, 37.6173);
@@ -20,6 +22,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[DataProvider('latitudeBoundaries')]
+    #[TestDox('Принимает граничные значения широты')]
     public function testItAcceptsLatitudeBoundaries(float $latitude): void
     {
         $coordinates = Coordinates::fromDegrees($latitude, 0.0);
@@ -28,6 +31,7 @@ final class CoordinatesTest extends TestCase
     }
 
     #[DataProvider('longitudeBoundaries')]
+    #[TestDox('Принимает граничные значения долготы')]
     public function testItAcceptsLongitudeBoundaries(float $longitude): void
     {
         $coordinates = Coordinates::fromDegrees(0.0, $longitude);
@@ -36,19 +40,21 @@ final class CoordinatesTest extends TestCase
     }
 
     #[DataProvider('invalidLatitudes')]
+    #[TestDox('Отклоняет некорректную широту')]
     public function testItRejectsInvalidLatitudes(float $latitude): void
     {
         $this->expectException(InvalidCoordinatesException::class);
-        $this->expectExceptionMessage('latitude');
+        $this->expectExceptionMessageIsOrContains('latitude');
 
         Coordinates::fromDegrees($latitude, 0.0);
     }
 
     #[DataProvider('invalidLongitudes')]
+    #[TestDox('Отклоняет некорректную долготу')]
     public function testItRejectsInvalidLongitudes(float $longitude): void
     {
         $this->expectException(InvalidCoordinatesException::class);
-        $this->expectExceptionMessage('longitude');
+        $this->expectExceptionMessageIsOrContains('longitude');
 
         Coordinates::fromDegrees(0.0, $longitude);
     }
