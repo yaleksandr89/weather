@@ -8,6 +8,11 @@
             "Yaleksandr\\Weather\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Yaleksandr\\Weather\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Aleksandr Yurchenko",
@@ -20,5 +25,21 @@
         "psr/http-client": "^1.0.3",
         "psr/http-factory": "^1.1.0",
         "psr/http-message": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^13.2.5",
+        "phpstan/phpstan": "^2.2.6",
+        "friendsofphp/php-cs-fixer": "^3.95.17"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "analyse": "phpstan analyse",
+        "cs:check": "php-cs-fixer check --diff",
+        "cs:fix": "php-cs-fixer fix",
+        "check": [
+            "@test",
+            "@analyse",
+            "@cs:check"
+        ]
     }
 }
