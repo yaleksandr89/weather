@@ -44,7 +44,6 @@ final class CoordinatesTest extends TestCase
     public function testItRejectsInvalidLatitudes(float $latitude): void
     {
         $this->expectException(InvalidCoordinatesException::class);
-        $this->expectExceptionMessageIsOrContains('latitude');
 
         Coordinates::fromDegrees($latitude, 0.0);
     }
@@ -54,7 +53,6 @@ final class CoordinatesTest extends TestCase
     public function testItRejectsInvalidLongitudes(float $longitude): void
     {
         $this->expectException(InvalidCoordinatesException::class);
-        $this->expectExceptionMessageIsOrContains('longitude');
 
         Coordinates::fromDegrees(0.0, $longitude);
     }

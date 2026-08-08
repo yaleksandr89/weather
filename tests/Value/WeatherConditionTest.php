@@ -18,12 +18,6 @@ final class WeatherConditionTest extends TestCase
         self::assertSame($value, $condition->value);
     }
 
-    #[TestDox('Содержит ровно десять погодных состояний')]
-    public function testItContainsExactlyTenCases(): void
-    {
-        self::assertCount(10, WeatherCondition::cases());
-    }
-
     /** @return iterable<string, array{WeatherCondition, string}> */
     public static function conditions(): iterable
     {

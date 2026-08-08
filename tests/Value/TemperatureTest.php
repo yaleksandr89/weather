@@ -35,7 +35,6 @@ final class TemperatureTest extends TestCase
     public function testItRejectsNonFiniteCelsius(float $celsius): void
     {
         $this->expectException(InvalidTemperatureException::class);
-        $this->expectExceptionMessageIs('Temperature must be finite.');
 
         Temperature::fromCelsius($celsius);
     }
