@@ -1,6 +1,6 @@
 {
     "name": "yaleksandr89/weather",
-    "description": "Package for getting weather for any location",
+    "description": "Package for retrieving current weather by coordinates",
     "type": "library",
     "license": "MIT",
     "autoload": {
