@@ -34,6 +34,10 @@
     },
     "scripts": {
         "test": "phpunit",
+        "coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --coverage-clover coverage.xml --coverage-text"
+        ],
         "analyse": "phpstan analyse",
         "cs:check": "php-cs-fixer check --diff",
         "cs:fix": "php-cs-fixer fix",
