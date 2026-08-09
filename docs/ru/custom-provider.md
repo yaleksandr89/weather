@@ -10,10 +10,11 @@
 
 ## CurrentWeatherProvider
 
-Интерфейс принимает `Coordinates` и возвращает `CurrentWeather`.
+Контракт интерфейса выглядит так:
 
 ```php
-use Yaleksandr\Weather\Contract\CurrentWeatherProvider;
+namespace Yaleksandr\Weather\Contract;
+
 use Yaleksandr\Weather\Model\CurrentWeather;
 use Yaleksandr\Weather\Value\Coordinates;
 
