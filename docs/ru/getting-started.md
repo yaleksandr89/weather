@@ -10,7 +10,7 @@
 
 ## Требования
 
-Нужны PHP ^8.4 и Composer.
+Нужны `PHP ^8.4` и `Composer`.
 
 ## Установка
 
@@ -20,11 +20,11 @@ composer require yaleksandr89/weather
 
 ## Выбор провайдера
 
-Проще начать с Open-Meteo: API key для него не нужен. Для обоих вариантов создайте `Weather` через `Weather::create()`.
+Проще начать с Open-Meteo: в текущей встроенной интеграции API key для него не нужен. Для обоих вариантов создайте `Weather` через `Weather::create()`.
 
 ### Open-Meteo
 
-`OpenMeteoConfig` не требует параметров и API key.
+`OpenMeteoConfig` не требует параметров.
 
 ```php
 use Yaleksandr\Weather\Config\OpenMeteoConfig;
@@ -55,7 +55,7 @@ $weather = Weather::create(new WeatherApiConfig($apiKey));
 ```php
 use Yaleksandr\Weather\Value\Coordinates;
 
-$coordinates = Coordinates::fromDegrees(55.7558, 37.6176);
+$coordinates = Coordinates::fromDegrees(55.7558, 37.6173);
 ```
 
 ## Получение текущей погоды
@@ -69,6 +69,4 @@ echo $current->temperature()->celsius();
 echo $current->condition()->value;
 ```
 
-Подробнее о составе результата и необязательных значениях — в [руководстве по `CurrentWeather`](current-weather.md).
-
-Ошибки входных данных и запросов к сервису описаны в [руководстве по ошибкам](errors.md).
+Подробнее о составе результата и необязательных значениях — в [руководстве по `CurrentWeather`](current-weather.md). Ошибки входных данных и запросов к сервису описаны в [руководстве по ошибкам](errors.md).

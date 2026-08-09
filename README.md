@@ -8,13 +8,12 @@
 |---|---|---|---|---|---|
 | **Выбран** | English | Español | 中文 | Français | Deutsch |
 
-Composer-пакет для получения текущей погоды по координатам через WeatherAPI и Open-Meteo.
-Данные разных погодных сервисов приводятся к единому типизированному формату и общим единицам измерения.
+Библиотека для получения текущей погоды по координатам через WeatherAPI и Open-Meteo.
+Данные разных сервисов приводятся к единому типизированному формату и общим единицам измерения.
 
 ## Для чего нужен пакет
 
-WeatherAPI и Open-Meteo используют разные HTTP API и форматы ответов.
-Weather предоставляет единый PHP API для получения текущей погоды по координатам, поэтому прикладному коду не нужно учитывать особенности конкретного сервиса.
+WeatherAPI и Open-Meteo используют разные HTTP API и форматы ответов. Weather даёт единый PHP API для получения текущей погоды по координатам, поэтому прикладному коду не нужно учитывать особенности конкретного сервиса.
 
 ## Что делает пакет
 
@@ -50,7 +49,7 @@ use Yaleksandr\Weather\Weather;
 $weather = Weather::create(new OpenMeteoConfig());
 
 $current = $weather->current(
-    Coordinates::fromDegrees(55.7558, 37.6176),
+    Coordinates::fromDegrees(55.7558, 37.6173),
 );
 
 echo $current->temperature()->celsius();
@@ -74,15 +73,47 @@ $weather = Weather::create(
 );
 
 $current = $weather->current(
-    Coordinates::fromDegrees(55.7558, 37.6176),
+    Coordinates::fromDegrees(55.7558, 37.6173),
 );
 ```
 
 Настройка встроенных сервисов и различия между ними подробно описаны в [руководстве по провайдерам](docs/ru/providers.md).
 
+## От ответа сервиса к CurrentWeather
+
+Внешние API используют собственные названия полей и форматы. Например, Open-Meteo вернул для запроса с координатами `55.7558, 37.6173` такой фрагмент `current`:
+
+```json
+{
+    "time": 1786285800,
+    "interval": 900,
+    "temperature_2m": 21.8,
+    "relative_humidity_2m": 48,
+    "apparent_temperature": 20.4,
+    "precipitation": 0.0,
+    "weather_code": 1,
+    "pressure_msl": 1018.4,
+    "wind_speed_10m": 2.91,
+    "wind_direction_10m": 333,
+    "wind_gusts_10m": 8.1
+}
+```
+
+`Weather::current()` возвращает типизированный `CurrentWeather`; значения доступны через публичные методы:
+
+```php
+$temperature = $current->temperature()->celsius(); // 21.8
+$condition = $current->condition()->value; // clear
+$humidity = $current->humidityPercent(); // 48.0
+$pressure = $current->pressureHectopascals(); // 1018.4
+$windSpeed = $current->wind()?->speedMetersPerSecond(); // 2.91
+```
+
+`Temperature` и `Wind` — типизированные объекты, а `WeatherCondition` — enum. Прикладному коду не нужно знать поля провайдера вроде `temperature_2m` или `weather_code`.
+
 ## Работа с результатом
 
-`current()` возвращает объект `CurrentWeather` с температурой, состоянием погоды, временем наблюдения и доступными дополнительными данными:
+`current()` возвращает `CurrentWeather` с температурой, состоянием погоды, временем наблюдения и доступными дополнительными данными:
 
 ```php
 $temperature = $current->temperature()->celsius();

@@ -55,10 +55,11 @@ final class ExampleCurrentWeatherProvider implements CurrentWeatherProvider
 
 ```php
 use Yaleksandr\Weather\Weather;
+use Yaleksandr\Weather\Value\Coordinates;
 
 $customProvider = new ExampleCurrentWeatherProvider();
 $weather = new Weather($customProvider);
-$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6176));
+$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 ```
 
 ## Ответственность провайдера

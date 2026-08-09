@@ -6,11 +6,11 @@
 |---|---|---|---|---|---|
 | **Выбран** | English | Español | 中文 | Français | Deutsch |
 
-Встроены WeatherAPI и Open-Meteo. При создании `Weather` выберите соответствующую конфигурацию; затем работа через `current()` будет одинаковой.
+Встроены WeatherAPI и Open-Meteo. При создании `Weather` выберите соответствующую конфигурацию; затем вызов `current()` будет одинаковым. Оба варианта возвращают `CurrentWeather`, а детали ответов конкретного сервиса приводятся к этой модели внутри библиотеки.
 
 ## Open-Meteo
 
-`OpenMeteoConfig` не принимает параметров. Для использования через текущую реализацию API key не нужен.
+`OpenMeteoConfig` не принимает параметров. В текущей встроенной интеграции API key не нужен.
 
 ```php
 use Yaleksandr\Weather\Config\OpenMeteoConfig;
@@ -18,7 +18,7 @@ use Yaleksandr\Weather\Value\Coordinates;
 use Yaleksandr\Weather\Weather;
 
 $weather = Weather::create(new OpenMeteoConfig());
-$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6176));
+$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 ```
 
 ## WeatherAPI
@@ -33,7 +33,7 @@ use Yaleksandr\Weather\Weather;
 $apiKey = getenv('WEATHER_API_KEY')
     ?: throw new \RuntimeException('WEATHER_API_KEY is not set.');
 $weather = Weather::create(new WeatherApiConfig($apiKey));
-$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6176));
+$current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 ```
 
 ## Как выбрать провайдера
@@ -43,7 +43,7 @@ $current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6176));
 | Open-Meteo | `OpenMeteoConfig` | Не требуется |
 | WeatherAPI | `WeatherApiConfig` | Обязателен |
 
-Оба варианта возвращают `CurrentWeather`. Состав результата и единицы измерения описаны в [руководстве по `CurrentWeather`](current-weather.md).
+Состав результата и единицы измерения описаны в [руководстве по `CurrentWeather`](current-weather.md). Короткий пример того, как ответ Open-Meteo становится этой моделью, есть в [README](../../README.md#от-ответа-сервиса-к-currentweather).
 
 ## Официальная документация
 

@@ -6,16 +6,16 @@
 |---|---|---|---|---|---|
 | **Выбран** | English | Español | 中文 | Français | Deutsch |
 
-Ошибки входных данных и конфигурации отличаются от ошибок при обращении к внешнему сервису и обработке его ответа.
+Ошибки входных данных и конфигурации отделены от ошибок при обращении к внешнему сервису и обработке его ответа.
 
-## Ошибки валидации
+## Ошибки валидации и конфигурации
 
 Следующие исключения наследуются от `InvalidArgumentException`:
 
 | Исключение | Когда возникает |
 |---|---|
 | `InvalidCoordinatesException` | Некорректны широта или долгота |
-| `InvalidWeatherApiConfigException` | В `WeatherApiConfig` передан пустой API key |
+| `InvalidWeatherApiConfigException` | В `WeatherApiConfig` передан пустой или состоящий из пробелов API key |
 | `InvalidTemperatureException` | В `Temperature` передано некорректное значение |
 | `InvalidWindException` | Некорректны параметры `Wind` |
 | `InvalidCurrentWeatherException` | Некорректны значения при создании `CurrentWeather` |
@@ -42,7 +42,7 @@ try {
 | `AuthenticationException` | Провайдер отклонил аутентификацию |
 | `LocationNotFoundException` | Провайдер не нашёл локацию по запросу |
 | `RateLimitException` | Провайдер ограничил запросы |
-| `ProviderUnavailableException` | Провайдер вернул неуспешный ответ, не отнесённый к более точной категории |
+| `ProviderUnavailableException` | Сервис вернул неуспешный ответ, не отнесённый к более точной категории |
 | `TransportException` | Ошибка транспорта при HTTP-запросе |
 | `MalformedResponseException` | Ответ невозможно разобрать или преобразовать в модель пакета |
 
