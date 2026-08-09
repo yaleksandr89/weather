@@ -1,40 +1,30 @@
 <?php
 
-namespace Ya\Weather;
+declare(strict_types=1);
 
-use GuzzleHttp\Exception\GuzzleException;
-use IlluminateAgnostic\Arr\Support\Arr;
-use Ya\Weather\Api\WeatherClient;
-use Ya\Weather\Models\Result;
+namespace Yaleksandr\Weather;
 
-class Weather
+use Yaleksandr\Weather\Config\OpenMeteoConfig;
+use Yaleksandr\Weather\Config\WeatherApiConfig;
+use Yaleksandr\Weather\Contract\CurrentWeatherProvider;
+use Yaleksandr\Weather\Internal\ProviderFactory;
+use Yaleksandr\Weather\Model\CurrentWeather;
+use Yaleksandr\Weather\Value\Coordinates;
+
+final readonly class Weather
 {
-    private string $location;
-
-    private WeatherClient $client;
-
     public function __construct(
-        private readonly string $apiKey
-    ) {
-        $this->client = new WeatherClient($apiKey);
+        private CurrentWeatherProvider $provider,
+    ) {}
+
+    public static function create(
+        WeatherApiConfig|OpenMeteoConfig $config,
+    ): self {
+        return new self(ProviderFactory::create($config));
     }
 
-    public function setLocation(string $location): static
+    public function current(Coordinates $coordinates): CurrentWeather
     {
-        $this->location = $location;
-        return $this;
-    }
-
-    /**
-     * @throws GuzzleException
-     */
-    public function get(): Result
-    {
-        $data = $this->client
-            ->request($this->location);
-
-        return (new Result())
-            ->setCelsius(Arr::get($data, 'current.temp_c'))
-            ->setFahrenheit(Arr::get($data, 'current.temp_f'));
+        return $this->provider->current($coordinates);
     }
 }

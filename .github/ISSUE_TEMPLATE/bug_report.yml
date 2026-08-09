@@ -1,0 +1,90 @@
+name: Bug report / Сообщить об ошибке
+description: Report a reproducible problem with the Weather package / Сообщить о воспроизводимой проблеме пакета Weather
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a problem. / Спасибо, что нашли время сообщить о проблеме.
+
+        Do not publish API keys, tokens, secrets, or sensitive provider payloads. / Не публикуйте API-ключи, токены, секреты или чувствительные данные провайдера.
+
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider / Провайдер
+      description: Which provider or shared package behavior is affected? / Какой провайдер или общее поведение пакета затронуто?
+      options:
+        - Open-Meteo
+        - WeatherAPI
+        - Custom provider / Собственный провайдер
+        - Provider-independent / Не зависит от провайдера
+    validations:
+      required: true
+
+  - type: input
+    id: php-version
+    attributes:
+      label: PHP version / Версия PHP
+      description: Specify the exact PHP version. / Укажите точную версию PHP.
+      placeholder: "8.4.x or 8.5.x / 8.4.x или 8.5.x"
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version / Версия пакета
+      description: Specify the installed version or commit. / Укажите установленную версию или коммит.
+      placeholder: "2.x.y or abc1234 / 2.x.y или abc1234"
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / Окружение
+      description: If relevant, include the framework, application, or HTTP client. No framework is required. / Если важно, укажите фреймворк, приложение или HTTP-клиент. Фреймворк не обязателен.
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction / Воспроизведение
+      description: Provide minimal code or steps that reproduce the problem. / Приведите минимальный код или шаги для воспроизведения проблемы.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result / Ожидаемый результат
+      description: What did you expect to happen? / Что должно было произойти?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result / Фактический результат
+      description: What happened instead? / Что произошло на самом деле?
+    validations:
+      required: true
+
+  - type: textarea
+    id: sanitized-output
+    attributes:
+      label: Sanitized details / Очищенные данные
+      description: Include only data with API keys, secrets, and sensitive values removed. / Добавляйте только данные, из которых удалены API-ключи, секреты и чувствительные значения.
+      render: text
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: Confirmations / Подтверждения
+      options:
+        - label: I removed sensitive data and API keys. / Я удалил(а) чувствительные данные и API-ключи.
+          required: true
+        - label: I searched existing Issues for the same problem. / Я проверил(а) существующие Issues на наличие такой проблемы.
+          required: true
