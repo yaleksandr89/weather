@@ -23,18 +23,20 @@ $current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 
 ## WeatherAPI
 
-`WeatherApiConfig` требует непустой API key. Получайте его из окружения и не добавляйте ключ в код, репозиторий или логи.
+`WeatherApiConfig` требует непустой API key.
 
 ```php
 use Yaleksandr\Weather\Config\WeatherApiConfig;
 use Yaleksandr\Weather\Value\Coordinates;
 use Yaleksandr\Weather\Weather;
 
-$apiKey = getenv('WEATHER_API_KEY')
-    ?: throw new \RuntimeException('WEATHER_API_KEY is not set.');
-$weather = Weather::create(new WeatherApiConfig($apiKey));
+$weather = Weather::create(
+    new WeatherApiConfig('YOUR_WEATHERAPI_KEY'),
+);
 $current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 ```
+
+Замените `YOUR_WEATHERAPI_KEY` своим ключом и не добавляйте реальный ключ в репозиторий или логи. Способ хранения — ответственность приложения: используйте, например, конфигурацию приложения, переменные окружения или хранилище секретов.
 
 ## Как выбрать провайдера
 
@@ -43,7 +45,7 @@ $current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 | Open-Meteo | `OpenMeteoConfig` | Не требуется |
 | WeatherAPI | `WeatherApiConfig` | Обязателен |
 
-Состав результата и единицы измерения описаны в [руководстве по `CurrentWeather`](current-weather.md). Короткий пример того, как ответ Open-Meteo становится этой моделью, есть в [README](../../README.md#от-ответа-сервиса-к-currentweather).
+Состав результата и единицы измерения описаны в [руководстве по `CurrentWeather`](current-weather.md). Короткие примеры запуска и преобразования ответов обоих провайдеров есть в [README](../../README.md#быстрый-старт).
 
 ## Официальная документация
 

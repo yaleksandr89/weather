@@ -35,16 +35,18 @@ $weather = Weather::create(new OpenMeteoConfig());
 
 ### WeatherAPI
 
-`WeatherApiConfig` требует API key. Получайте его из окружения и не храните в исходном коде.
+`WeatherApiConfig` требует API key.
 
 ```php
 use Yaleksandr\Weather\Config\WeatherApiConfig;
 use Yaleksandr\Weather\Weather;
 
-$apiKey = getenv('WEATHER_API_KEY')
-    ?: throw new \RuntimeException('WEATHER_API_KEY is not set.');
-$weather = Weather::create(new WeatherApiConfig($apiKey));
+$weather = Weather::create(
+    new WeatherApiConfig('YOUR_WEATHERAPI_KEY'),
+);
 ```
+
+Замените `YOUR_WEATHERAPI_KEY` своим ключом и не добавляйте реальный ключ в репозиторий. Способ хранения — ответственность приложения: используйте, например, конфигурацию приложения, переменные окружения или хранилище секретов.
 
 Подробное сравнение и ссылки на документацию сервисов есть в [руководстве по провайдерам](providers.md).
 

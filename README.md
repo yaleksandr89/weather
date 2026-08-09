@@ -37,9 +37,9 @@ WeatherAPI и Open-Meteo используют разные HTTP API и форм�
 composer require yaleksandr89/weather
 ```
 
-Для первого запуска проще использовать **Open-Meteo** — для него не требуется API key.
-
 ### Open-Meteo
+
+Для Open-Meteo API key не требуется.
 
 ```php
 use Yaleksandr\Weather\Config\OpenMeteoConfig;
@@ -56,32 +56,10 @@ echo $current->temperature()->celsius();
 echo $current->condition()->value;
 ```
 
-### WeatherAPI
+<details>
+<summary>Показать реальный ответ Open-Meteo и CurrentWeather</summary>
 
-Для WeatherAPI нужен API key. Храните его вне исходного кода, например в переменной окружения:
-
-```php
-use Yaleksandr\Weather\Config\WeatherApiConfig;
-use Yaleksandr\Weather\Value\Coordinates;
-use Yaleksandr\Weather\Weather;
-
-$apiKey = getenv('WEATHER_API_KEY')
-    ?: throw new \RuntimeException('WEATHER_API_KEY is not set.');
-
-$weather = Weather::create(
-    new WeatherApiConfig($apiKey),
-);
-
-$current = $weather->current(
-    Coordinates::fromDegrees(55.7558, 37.6173),
-);
-```
-
-Настройка встроенных сервисов и различия между ними подробно описаны в [руководстве по провайдерам](docs/ru/providers.md).
-
-## От ответа сервиса к CurrentWeather
-
-Внешние API используют собственные названия полей и форматы. Например, Open-Meteo вернул для запроса с координатами `55.7558, 37.6173` такой фрагмент `current`:
+#### Фрагмент реального ответа Open-Meteo
 
 ```json
 {
@@ -99,31 +77,118 @@ $current = $weather->current(
 }
 ```
 
-`Weather::current()` возвращает типизированный `CurrentWeather`; значения доступны через публичные методы:
+#### Результат после преобразования
 
-```php
-$temperature = $current->temperature()->celsius(); // 21.8
-$condition = $current->condition()->value; // clear
-$humidity = $current->humidityPercent(); // 48.0
-$pressure = $current->pressureHectopascals(); // 1018.4
-$windSpeed = $current->wind()?->speedMetersPerSecond(); // 2.91
+```text
+Yaleksandr\Weather\Model\CurrentWeather {
+    coordinates: Yaleksandr\Weather\Value\Coordinates {
+        latitude: 55.7558
+        longitude: 37.6173
+    }
+    observedAt: DateTimeImmutable {
+        date: 2026-08-09 14:30:00 UTC
+    }
+    temperature: Yaleksandr\Weather\Value\Temperature {
+        celsius: 21.8
+    }
+    condition: Yaleksandr\Weather\Value\WeatherCondition {
+        name: Clear
+        value: clear
+    }
+    feelsLike: Yaleksandr\Weather\Value\Temperature {
+        celsius: 20.4
+    }
+    humidityPercent: 48.0
+    pressureHectopascals: 1018.4
+    wind: Yaleksandr\Weather\Value\Wind {
+        speed: 2.91
+        directionDegrees: 333.0
+        gust: 8.1
+    }
+    precipitationMillimeters: 0.0
+}
 ```
 
-`Temperature` и `Wind` — типизированные объекты, а `WeatherCondition` — enum. Прикладному коду не нужно знать поля провайдера вроде `temperature_2m` или `weather_code`.
+</details>
 
-## Работа с результатом
+### WeatherAPI
 
-`current()` возвращает `CurrentWeather` с температурой, состоянием погоды, временем наблюдения и доступными дополнительными данными:
+Для WeatherAPI нужен API key:
 
 ```php
-$temperature = $current->temperature()->celsius();
-$condition = $current->condition()->value;
-$humidity = $current->humidityPercent();
-$pressure = $current->pressureHectopascals();
-$wind = $current->wind();
+use Yaleksandr\Weather\Config\WeatherApiConfig;
+use Yaleksandr\Weather\Value\Coordinates;
+use Yaleksandr\Weather\Weather;
+
+$weather = Weather::create(
+    new WeatherApiConfig('YOUR_WEATHERAPI_KEY'),
+);
+
+$current = $weather->current(
+    Coordinates::fromDegrees(55.7558, 37.6173),
+);
 ```
 
-Полный состав данных, единицы измерения и необязательные значения описаны в [руководстве по `CurrentWeather`](docs/ru/current-weather.md).
+Замените `YOUR_WEATHERAPI_KEY` своим ключом. Не добавляйте реальный ключ в репозиторий: в приложении храните его вне исходного кода, например в конфигурации приложения, переменных окружения или хранилище секретов.
+
+<details>
+<summary>Показать реальный ответ WeatherAPI и CurrentWeather</summary>
+
+#### Фрагмент реального ответа WeatherAPI
+
+```json
+{
+    "last_updated_epoch": 1786290300,
+    "temp_c": 21.4,
+    "condition": {
+        "text": "Sunny",
+        "code": 1000
+    },
+    "wind_kph": 12.6,
+    "wind_degree": 341,
+    "pressure_mb": 1019.0,
+    "precip_mm": 0.0,
+    "humidity": 41,
+    "feelslike_c": 18.4,
+    "gust_kph": 15.8
+}
+```
+
+#### Результат после преобразования
+
+```text
+Yaleksandr\Weather\Model\CurrentWeather {
+    coordinates: Yaleksandr\Weather\Value\Coordinates {
+        latitude: 55.7558
+        longitude: 37.6173
+    }
+    observedAt: DateTimeImmutable {
+        date: 2026-08-09 15:45:00 UTC
+    }
+    temperature: Yaleksandr\Weather\Value\Temperature {
+        celsius: 21.4
+    }
+    condition: Yaleksandr\Weather\Value\WeatherCondition {
+        name: Clear
+        value: clear
+    }
+    feelsLike: Yaleksandr\Weather\Value\Temperature {
+        celsius: 18.4
+    }
+    humidityPercent: 41.0
+    pressureHectopascals: 1019.0
+    wind: Yaleksandr\Weather\Value\Wind {
+        speed: 3.5
+        directionDegrees: 341.0
+        gust: 4.3888888888889
+    }
+    precipitationMillimeters: 0.0
+}
+```
+
+</details>
+
+Оба провайдера возвращают `CurrentWeather`. Полный состав данных, единицы измерения, необязательные значения и примеры работы с объектом описаны в [руководстве по `CurrentWeather`](docs/ru/current-weather.md). Настройка встроенных сервисов и различия между ними — в [руководстве по провайдерам](docs/ru/providers.md).
 
 ## Обработка ошибок
 
