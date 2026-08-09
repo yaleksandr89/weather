@@ -4,7 +4,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./current-weather_en.md) | [Español](./current-weather_es.md) | [中文](./current-weather_zh.md) | [Français](./current-weather_fr.md) | [Deutsch](./current-weather_de.md) |
 
 `Weather::current()` возвращает `CurrentWeather`. В этой типизированной модели находятся координаты запроса, время наблюдения и погодные данные в единых единицах измерения.
 

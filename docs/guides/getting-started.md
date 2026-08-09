@@ -4,7 +4,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./getting-started_en.md) | [Español](./getting-started_es.md) | [中文](./getting-started_zh.md) | [Français](./getting-started_fr.md) | [Deutsch](./getting-started_de.md) |
 
 Здесь показаны установка, выбор встроенного провайдера, создание координат и первый запрос текущей погоды.
 
@@ -71,4 +71,4 @@ echo $current->temperature()->celsius();
 echo $current->condition()->value;
 ```
 
-Подробнее о составе результата и необязательных значениях — в [руководстве по `CurrentWeather`](current-weather.md). Ошибки входных данных и запросов к сервису описаны в [руководстве по ошибкам](errors.md).
+Подробнее о составе результата и необязательных значениях — в [руководстве по `CurrentWeather`](../reference/current-weather.md). Ошибки входных данных и запросов к сервису описаны в [руководстве по ошибкам](../reference/errors.md).

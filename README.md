@@ -21,7 +21,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./docs/readme/README_en.md) | [Español](./docs/readme/README_es.md) | [中文](./docs/readme/README_zh.md) | [Français](./docs/readme/README_fr.md) | [Deutsch](./docs/readme/README_de.md) |
 
 Библиотека для получения текущей погоды по координатам через WeatherAPI и Open-Meteo.
 Данные разных сервисов приводятся к единому типизированному формату и общим единицам измерения.
@@ -203,13 +203,13 @@ Yaleksandr\Weather\Model\CurrentWeather {
 
 </details>
 
-Оба провайдера возвращают `CurrentWeather`. Полный состав данных, единицы измерения, необязательные значения и примеры работы с объектом описаны в [руководстве по `CurrentWeather`](docs/ru/current-weather.md). Настройка встроенных сервисов и различия между ними — в [руководстве по провайдерам](docs/ru/providers.md).
+Оба провайдера возвращают `CurrentWeather`. Полный состав данных, единицы измерения, необязательные значения и примеры работы с объектом описаны в [руководстве по `CurrentWeather`](docs/reference/current-weather.md). Настройка встроенных сервисов и различия между ними — в [руководстве по провайдерам](docs/guides/providers.md).
 
 ## Обработка ошибок
 
 Ошибки входных данных отделены от ошибок, возникающих при обращении к погодному сервису.
 
-Правила обработки и иерархия исключений описаны в [руководстве по ошибкам](docs/ru/errors.md).
+Правила обработки и иерархия исключений описаны в [руководстве по ошибкам](docs/reference/errors.md).
 
 ## Собственный провайдер
 
@@ -221,7 +221,7 @@ use Yaleksandr\Weather\Weather;
 $weather = new Weather($customProvider);
 ```
 
-Контракт и пример реализации приведены в [руководстве по собственному провайдеру](docs/ru/custom-provider.md).
+Контракт и пример реализации приведены в [руководстве по собственному провайдеру](docs/guides/custom-provider.md).
 
 ## Ограничения
 

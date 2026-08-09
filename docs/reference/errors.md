@@ -4,7 +4,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./errors_en.md) | [Español](./errors_es.md) | [中文](./errors_zh.md) | [Français](./errors_fr.md) | [Deutsch](./errors_de.md) |
 
 Ошибки входных данных и конфигурации отделены от ошибок при обращении к внешнему сервису и обработке его ответа.
 

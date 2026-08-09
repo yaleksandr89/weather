@@ -4,7 +4,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./providers_en.md) | [Español](./providers_es.md) | [中文](./providers_zh.md) | [Français](./providers_fr.md) | [Deutsch](./providers_de.md) |
 
 Встроены WeatherAPI и Open-Meteo. При создании `Weather` выберите соответствующую конфигурацию; затем вызов `current()` будет одинаковым. Оба варианта возвращают `CurrentWeather`, а особенности формата, единиц измерения и кодов конкретного сервиса нормализуются внутри библиотеки.
 
@@ -161,7 +161,7 @@ WeatherAPI отдаёт ветер в km/h, а публичная модель �
 | Open-Meteo | `OpenMeteoConfig` | Не требуется |
 | WeatherAPI | `WeatherApiConfig` | Обязателен |
 
-Оба встроенных провайдера возвращают одну публичную модель. Полный состав результата, единицы измерения и необязательные значения описаны в [руководстве по `CurrentWeather`](current-weather.md).
+Оба встроенных провайдера возвращают одну публичную модель. Полный состав результата, единицы измерения и необязательные значения описаны в [руководстве по `CurrentWeather`](../reference/current-weather.md).
 
 ## Официальная документация
 

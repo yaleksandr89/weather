@@ -4,7 +4,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | English | Español | 中文 | Français | Deutsch |
+| **Выбран** | [English](./custom-provider_en.md) | [Español](./custom-provider_es.md) | [中文](./custom-provider_zh.md) | [Français](./custom-provider_fr.md) | [Deutsch](./custom-provider_de.md) |
 
 Если нужен другой источник текущей погоды, реализуйте `CurrentWeatherProvider` и передайте его в `Weather`.
 
@@ -72,4 +72,4 @@ $current = $weather->current(Coordinates::fromDegrees(55.7558, 37.6173));
 - соблюдать единицы измерения и ограничения публичной модели;
 - корректно обрабатывать ошибки своей интеграции.
 
-Структура результата описана в [руководстве по `CurrentWeather`](current-weather.md), а модель ошибок — в [руководстве по ошибкам](errors.md).
+Структура результата описана в [руководстве по `CurrentWeather`](../reference/current-weather.md), а модель ошибок — в [руководстве по ошибкам](../reference/errors.md).
