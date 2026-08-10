@@ -66,16 +66,22 @@ final readonly class WeatherApiProvider implements CurrentWeatherProvider
 
     private function exceptionFor(int $statusCode, ?int $errorCode): WeatherException
     {
-        return match ($errorCode) {
+        $exception = match ($errorCode) {
             1002, 2006, 2008, 2009 => new AuthenticationException('WeatherAPI authentication failed.'),
             2007 => new RateLimitException('WeatherAPI rate limit exceeded.'),
             1006 => new LocationNotFoundException('WeatherAPI location was not found.'),
             1003, 1005, 9999 => new ProviderUnavailableException('WeatherAPI is unavailable.'),
-            default => match ($statusCode) {
-                401, 403 => new AuthenticationException('WeatherAPI authentication failed.'),
-                429 => new RateLimitException('WeatherAPI rate limit exceeded.'),
-                default => new ProviderUnavailableException('WeatherAPI is unavailable.'),
-            },
+            default => null,
+        };
+
+        if ($exception !== null) {
+            return $exception;
+        }
+
+        return match ($statusCode) {
+            401, 403 => new AuthenticationException('WeatherAPI authentication failed.'),
+            429 => new RateLimitException('WeatherAPI rate limit exceeded.'),
+            default => new ProviderUnavailableException('WeatherAPI is unavailable.'),
         };
     }
 

@@ -6,6 +6,7 @@ namespace Yaleksandr\Weather\Tests\Provider\OpenMeteo;
 
 use GuzzleHttp\Psr7\HttpFactory;
 use GuzzleHttp\Psr7\Response;
+use JsonException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
@@ -28,6 +29,9 @@ final class OpenMeteoProviderTest extends TestCase
 {
     private const string CURRENT_VARIABLES = 'temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,pressure_msl,wind_speed_10m,wind_direction_10m,wind_gusts_10m';
 
+    /**
+     * @throws JsonException
+     */
     #[TestDox('Отправляет точный запрос Open-Meteo и сопоставляет текущую погоду')]
     public function testItRequestsAndMapsCurrentWeather(): void
     {
@@ -95,6 +99,16 @@ final class OpenMeteoProviderTest extends TestCase
     public function testItRejectsListTopLevelJson(): void
     {
         $provider = self::provider(new OpenMeteoRecordingClient(new Response(200, [], '[]')));
+
+        $this->expectException(MalformedResponseException::class);
+
+        $provider->current(Coordinates::fromDegrees(55.7558, 37.6173));
+    }
+
+    #[TestDox('Отклоняет успешный JSON object с числовым ключом верхнего уровня')]
+    public function testItRejectsSuccessfulJsonObjectWithNumericTopLevelKey(): void
+    {
+        $provider = self::provider(new OpenMeteoRecordingClient(new Response(200, [], '{"1":"invalid"}')));
 
         $this->expectException(MalformedResponseException::class);
 
