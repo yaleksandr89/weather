@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yaleksandr\Weather\Provider\OpenMeteo;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use Yaleksandr\Weather\Exception\InvalidCurrentWeatherException;
 use Yaleksandr\Weather\Exception\InvalidTemperatureException;
 use Yaleksandr\Weather\Exception\InvalidWindException;
@@ -83,10 +82,6 @@ final class OpenMeteoCurrentWeatherMapper
 
     private static function observedAt(int $timestamp): DateTimeImmutable
     {
-        try {
-            return new DateTimeImmutable('@' . $timestamp)->setTimezone(new DateTimeZone('UTC'));
-        } catch (\Exception $exception) {
-            throw new MalformedResponseException('Open-Meteo current time is invalid.', 0, $exception);
-        }
+        return DateTimeImmutable::createFromTimestamp($timestamp);
     }
 }

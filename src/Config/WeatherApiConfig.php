@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Yaleksandr\Weather\Config;
 
+use SensitiveParameter;
 use Yaleksandr\Weather\Exception\InvalidWeatherApiConfigException;
 
 final readonly class WeatherApiConfig
@@ -11,7 +12,7 @@ final readonly class WeatherApiConfig
     private string $apiKey;
 
     public function __construct(
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         string $apiKey,
     ) {
         if (trim($apiKey) === '') {

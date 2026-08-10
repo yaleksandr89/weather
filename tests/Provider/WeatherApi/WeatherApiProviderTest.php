@@ -129,6 +129,16 @@ final class WeatherApiProviderTest extends TestCase
         $provider->current(Coordinates::fromDegrees(55.7558, 37.6173));
     }
 
+    #[TestDox('Отклоняет успешный JSON object с числовым ключом верхнего уровня')]
+    public function testItRejectsSuccessfulJsonObjectWithNumericTopLevelKey(): void
+    {
+        $provider = self::provider(new WeatherApiRecordingClient(new Response(200, [], '{"1":"invalid"}')));
+
+        $this->expectException(MalformedResponseException::class);
+
+        $provider->current(Coordinates::fromDegrees(55.7558, 37.6173));
+    }
+
     /** @return iterable<string, array{int, int, class-string<WeatherException>}> */
     public static function documentedErrorCodes(): iterable
     {
@@ -146,6 +156,13 @@ final class WeatherApiProviderTest extends TestCase
     /** @return iterable<string, array{int, string, class-string<WeatherException>}> */
     public static function httpFallbacks(): iterable
     {
+        yield 'unauthorized with missing body' => [401, '', AuthenticationException::class];
+        yield 'forbidden with non-integer error code' => [403, '{"error":{"code":"2006"}}', AuthenticationException::class];
+        yield 'list error body' => [500, '[]', ProviderUnavailableException::class];
+        yield 'object without error section' => [503, '{"message":"provider text"}', ProviderUnavailableException::class];
+        yield 'list error section' => [503, '{"error":[]}', ProviderUnavailableException::class];
+        yield 'non-integer error code' => [503, '{"error":{"code":"9999"}}', ProviderUnavailableException::class];
+        yield 'unknown integer error code' => [503, '{"error":{"code":1234}}', ProviderUnavailableException::class];
         yield 'rate limited with malformed body' => [429, '{invalid', RateLimitException::class];
         yield 'service unavailable with missing body' => [503, '', ProviderUnavailableException::class];
     }

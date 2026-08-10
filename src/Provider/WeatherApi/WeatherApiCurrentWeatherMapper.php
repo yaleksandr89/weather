@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Yaleksandr\Weather\Provider\WeatherApi;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use Yaleksandr\Weather\Exception\InvalidCurrentWeatherException;
 use Yaleksandr\Weather\Exception\InvalidTemperatureException;
 use Yaleksandr\Weather\Exception\InvalidWindException;
@@ -95,10 +94,6 @@ final class WeatherApiCurrentWeatherMapper
 
     private static function observedAt(int $timestamp): DateTimeImmutable
     {
-        try {
-            return new DateTimeImmutable('@' . $timestamp)->setTimezone(new DateTimeZone('UTC'));
-        } catch (\Exception $exception) {
-            throw new MalformedResponseException('WeatherAPI current time is invalid.', 0, $exception);
-        }
+        return DateTimeImmutable::createFromTimestamp($timestamp);
     }
 }
