@@ -70,7 +70,7 @@
         "cs:check": "php-cs-fixer check --diff",
         "cs:fix": "php-cs-fixer fix",
         "check": [
-            "@composer validate --strict --no-check-publish",
+            "@composer validate --strict",
             "@composer audit",
             "@cs:check",
             "@analyse",

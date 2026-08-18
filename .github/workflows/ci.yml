@@ -38,7 +38,7 @@ jobs:
           coverage: none
 
       - name: Validate Composer metadata
-        run: composer validate --strict --no-check-publish
+        run: composer validate --strict
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
@@ -67,7 +67,7 @@ jobs:
           coverage: xdebug
 
       - name: Validate Composer metadata
-        run: composer validate --strict --no-check-publish
+        run: composer validate --strict
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
