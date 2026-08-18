@@ -1,24 +1,42 @@
 {
     "name": "yaleksandr89/weather",
     "description": "Package for retrieving current weather by coordinates",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Yaleksandr\\Weather\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Yaleksandr\\Weather\\Tests\\": "tests/"
-        }
-    },
+    "homepage": "https://github.com/yaleksandr89/weather",
+    "keywords": [
+        "weather",
+        "current-weather",
+        "open-meteo",
+        "weatherapi",
+        "weather-api",
+        "psr-17",
+        "psr-18"
+    ],
     "authors": [
         {
-            "name": "Aleksandr Yurchenko",
-            "email": "y.aleksandr89@yandex.ru"
+            "name": "Александр Юрченко",
+            "email": "y.aleksandr89@yandex.ru",
+            "homepage": "https://github.com/yaleksandr89",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/yaleksandr89/weather/issues",
+        "source": "https://github.com/yaleksandr89/weather",
+        "forum": "https://github.com/yaleksandr89/weather/discussions",
+        "security": "https://github.com/yaleksandr89/weather/security/policy"
+    },
+    "funding": [
+        {
+            "type": "other",
+            "url": "https://boosty.to/backendbezpafosa"
+        },
+        {
+            "type": "other",
+            "url": "https://sponsr.ru/backendbezpafosa/"
+        }
+    ],
+    "type": "library",
+    "license": "MIT",
     "require": {
         "php": "^8.4",
         "guzzlehttp/guzzle": "^8.0.1",
@@ -32,6 +50,16 @@
         "phpstan/phpstan-deprecation-rules": "^2.0.5",
         "friendsofphp/php-cs-fixer": "^3.95.17"
     },
+    "autoload": {
+        "psr-4": {
+            "Yaleksandr\\Weather\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yaleksandr\\Weather\\Tests\\": "tests/"
+        }
+    },
     "scripts": {
         "test": "phpunit",
         "coverage": [
@@ -42,9 +70,14 @@
         "cs:check": "php-cs-fixer check --diff",
         "cs:fix": "php-cs-fixer fix",
         "check": [
-            "@test",
+            "@composer validate --strict --no-check-publish",
+            "@composer audit",
+            "@cs:check",
             "@analyse",
-            "@cs:check"
+            "@test"
         ]
+    },
+    "config": {
+        "sort-packages": true
     }
 }
