@@ -8,13 +8,7 @@
 [![CI](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml/badge.svg)](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](../../LICENSE)
 
-<p align="center">
-  <img
-    src="../assets/weather-readme-cover.png"
-    alt="Weather — current weather PHP package with unified provider normalization"
-    width="100%"
-  >
-</p>
+![Weather — current weather PHP package with unified provider normalization](../assets/weather-readme-cover.png)
 
 ## Choose a language
 
