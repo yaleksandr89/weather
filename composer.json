@@ -1,6 +1,6 @@
 {
     "name": "yaleksandr89/weather",
-    "description": "Package for retrieving current weather by coordinates",
+    "description": "Package for retrieving current weather by coordinates.",
     "homepage": "https://github.com/yaleksandr89/weather",
     "keywords": [
         "weather",
