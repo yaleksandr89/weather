@@ -1,11 +1,11 @@
 # Weather
 
 [![Source Code](https://img.shields.io/badge/source-yaleksandr89%2Fweather-blue.svg?style=flat-square)](https://github.com/yaleksandr89/weather)
+[![CI](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml/badge.svg)](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml)
 [![Latest Stable Version](https://img.shields.io/packagist/v/yaleksandr89/weather.svg?style=flat-square)](https://packagist.org/packages/yaleksandr89/weather)
 [![Total Downloads](https://img.shields.io/packagist/dt/yaleksandr89/weather.svg?style=flat-square)](https://packagist.org/packages/yaleksandr89/weather)
 [![PHP](https://img.shields.io/badge/PHP-%5E8.4-777BB4.svg?style=flat-square&logo=php&logoColor=white)](https://www.php.net/)
 [![guzzlehttp/guzzle](https://img.shields.io/badge/guzzlehttp%2Fguzzle-%5E8.0.1-4E5D94.svg?style=flat-square)](https://packagist.org/packages/guzzlehttp/guzzle)
-[![CI](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml/badge.svg)](https://github.com/yaleksandr89/weather/actions/workflows/ci.yml)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 ![Weather — current weather PHP package with unified provider normalization](docs/assets/weather-readme-cover.png)
@@ -14,7 +14,7 @@
 
 | Русский | English | Español | 中文 | Français | Deutsch |
 |---|---|---|---|---|---|
-| **Выбран** | [English](./docs/readme/README_en.md) | [Español](./docs/readme/README_es.md) | [中文](./docs/readme/README_zh.md) | [Français](./docs/readme/README_fr.md) | [Deutsch](./docs/readme/README_de.md) |
+| **Выбран** | [English](docs/langs/en/README.md) | [Español](docs/langs/es/README.md) | [中文](docs/langs/zh/README.md) | [Français](docs/langs/fr/README.md) | [Deutsch](docs/langs/de/README.md) |
 
 Библиотека для получения текущей погоды по координатам через WeatherAPI и Open-Meteo.
 Данные разных сервисов приводятся к единому типизированному формату и общим единицам измерения.
@@ -196,13 +196,26 @@ Yaleksandr\Weather\Model\CurrentWeather {
 
 </details>
 
-Оба провайдера возвращают `CurrentWeather`. Полный состав данных, единицы измерения, необязательные значения и примеры работы с объектом описаны в [руководстве по `CurrentWeather`](docs/reference/current-weather.md). Настройка встроенных сервисов и различия между ними — в [руководстве по провайдерам](docs/guides/providers.md).
+Оба провайдера возвращают `CurrentWeather`. Полный состав данных, единицы измерения, необязательные значения и примеры работы с объектом описаны в [руководстве по `CurrentWeather`](docs/langs/ru/reference/current-weather.md). Настройка встроенных сервисов и различия между ними — в [руководстве по провайдерам](docs/langs/ru/guides/providers.md).
+
+## Как работает Weather
+
+```mermaid
+flowchart TD
+    A["Weather::current()"] --> B["Выбранный провайдер<br/>Open-Meteo / WeatherAPI"]
+    B --> C["Проверка и нормализация"]
+    C --> D["CurrentWeather"]
+    B -->|Ошибка| E["WeatherException"]
+    C -->|Ошибка| E
+```
+
+Приложение передаёт проверенные `Coordinates` в `Weather::current()`. Выбранный встроенный провайдер (Open-Meteo или WeatherAPI) выполняет HTTP-запрос через PSR-18, проверяет ответ и преобразует его в `CurrentWeather` с едиными единицами измерения. При ошибке выбрасывается соответствующее исключение; автоматического переключения между провайдерами нет. Собственный `CurrentWeatherProvider` реализует тот же контракт.
 
 ## Обработка ошибок
 
 Ошибки входных данных отделены от ошибок, возникающих при обращении к погодному сервису.
 
-Правила обработки и иерархия исключений описаны в [руководстве по ошибкам](docs/reference/errors.md).
+Правила обработки и иерархия исключений описаны в [руководстве по ошибкам](docs/langs/ru/reference/errors.md).
 
 ## Собственный провайдер
 
@@ -214,7 +227,7 @@ use Yaleksandr\Weather\Weather;
 $weather = new Weather($customProvider);
 ```
 
-Контракт и пример реализации приведены в [руководстве по собственному провайдеру](docs/guides/custom-provider.md).
+Контракт и пример реализации приведены в [руководстве по собственному провайдеру](docs/langs/ru/guides/custom-provider.md).
 
 ## Ограничения
 

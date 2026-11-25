@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace Yaleksandr\Weather\Exception;
 
-abstract class WeatherException extends \RuntimeException {}
+use RuntimeException;
+
+abstract class WeatherException extends RuntimeException {}

@@ -2,11 +2,9 @@ name: CI
 
 on:
   pull_request:
-    branches:
-      - master
+    branches: [master]
   push:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -17,74 +15,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  php:
-    name: ${{ matrix.name }}
+  linux:
+    name: Linux / PHP ${{ matrix.php }} / ${{ matrix.role }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: PHP 8.4 / Tests
-            php-version: '8.4'
+          - php: '8.4'
+            role: Tests
             command: composer test
-
-          - name: PHP 8.5 / Full checks
-            php-version: '8.5'
+          - php: '8.5'
+            role: Full checks
             command: composer check
-
+          - php: '8.6'
+            role: Tests
+            command: composer test
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          php-version: ${{ matrix.php-version }}
+          persist-credentials: false
+      - uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: ${{ matrix.php }}
           tools: composer:v2
           coverage: none
-
-      - name: Validate Composer metadata
-        run: composer validate --strict
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
-
-      - name: Run checks
-        run: ${{ matrix.command }}
-
-  coverage:
-    name: PHP 8.5 / Coverage
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.5'
-          tools: composer:v2
-          coverage: xdebug
-
-      - name: Validate Composer metadata
-        run: composer validate --strict
-
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
-
-      - name: Generate coverage report
-        run: composer coverage
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v7
-        with:
-          use_oidc: true
-          files: ./coverage.xml
-          disable_search: true
-          fail_ci_if_error: true
+      - run: composer validate --strict
+      - run: composer update --prefer-dist --no-interaction --no-progress
+      - run: ${{ matrix.command }}
