@@ -4,4 +4,6 @@ declare(strict_types=1);
 
 namespace Yaleksandr\Weather\Exception;
 
-final class InvalidCurrentWeatherException extends \InvalidArgumentException {}
+use InvalidArgumentException;
+
+final class InvalidCurrentWeatherException extends InvalidArgumentException {}

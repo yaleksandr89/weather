@@ -29,7 +29,7 @@ body:
     attributes:
       label: PHP version / Версия PHP
       description: Specify the exact PHP version. / Укажите точную версию PHP.
-      placeholder: "8.4.x or 8.5.x / 8.4.x или 8.5.x"
+      placeholder: "8.4.x, 8.5.x, 8.6.x"
     validations:
       required: true
 
